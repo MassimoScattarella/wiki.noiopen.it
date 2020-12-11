@@ -7,6 +7,7 @@ On production server you also need caddy and cron
 # Development
 
 - git clone of this repo
+- git checkout feature/mariadb-sso-integration
 - cp .env.example .env
 - make up
 
