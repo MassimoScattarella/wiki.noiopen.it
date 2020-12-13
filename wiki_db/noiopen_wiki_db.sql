@@ -1,7 +1,5 @@
 -- MariaDB dump 10.18  Distrib 10.5.8-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: noiopen_wiki
--- ------------------------------------------------------
 -- Server version	10.5.8-MariaDB-1:10.5.8+maria~focal
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -14,14 +12,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Current Database: `noiopen_wiki`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `noiopen_wiki` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-
-USE `noiopen_wiki`;
 
 --
 -- Table structure for table `actor`
@@ -46,7 +36,7 @@ CREATE TABLE `actor` (
 
 LOCK TABLES `actor` WRITE;
 /*!40000 ALTER TABLE `actor` DISABLE KEYS */;
-INSERT INTO `actor` VALUES (1,1,'noiopen_wiki'),(2,2,'MediaWiki default');
+INSERT INTO `actor` VALUES (1,1,'Noiopen'),(2,2,'MediaWiki default');
 /*!40000 ALTER TABLE `actor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -870,6 +860,7 @@ CREATE TABLE `openid_connect` (
 
 LOCK TABLES `openid_connect` WRITE;
 /*!40000 ALTER TABLE `openid_connect` DISABLE KEYS */;
+INSERT INTO `openid_connect` VALUES (1,'f97b4746-6503-4926-827c-932e31613558','http://noiopen_sso:8080/auth/realms/NoiOpen/');
 /*!40000 ALTER TABLE `openid_connect` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1601,7 +1592,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'noiopen_wiki','NoiOpen Wiki Administrator','','',NULL,'webmaster@noiopen.it','20201213170214','fd0329e6432637bce2dc5248843c4b3c',NULL,NULL,NULL,'20201211153156',0,NULL),(2,'MediaWiki default','','','',NULL,'','20201211153157','*** INVALID ***\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',NULL,NULL,NULL,'20201211153157',0,NULL);
+INSERT INTO `user` VALUES (1,'Noiopen','NoiOpen Wiki Administrator','','',NULL,'webmaster@noiopen.it','20201213170214','d5bf3b5ed8d98820d30ce8add001de85',NULL,'\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',NULL,'20201211153156',0,NULL),(2,'MediaWiki default','','','',NULL,'','20201211153157','*** INVALID ***\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',NULL,NULL,NULL,'20201211153157',0,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
