@@ -47,6 +47,7 @@ services:
       KEYCLOAK_IMPORT: /realms/NoiOpen-realm.json
     volumes:
       - "./sso/realms:/realms"
+      - "./backup:/backup"
 
   noiopen_wiki:
     build: ./wiki

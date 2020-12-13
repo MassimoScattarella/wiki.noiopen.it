@@ -49,6 +49,9 @@ build:
 	@echo '    "clientsecret" => "$(NOIOPEN_SSO_WIKI_CLIENT_SECRET)"' >> $(NOIOPEN_WIKI_LOCAL_SETTINGS)
 	@echo '];' >> $(NOIOPEN_WIKI_LOCAL_SETTINGS)
 
+	@echo 'Creating backup folder'
+	@mkdir -p $(NOIOPEN_BACKUP_FOLDER)
+
 	@echo "All done. Run 'make up' to create containers and start them"
 
 up:
@@ -60,29 +63,29 @@ down:
 cleanall:
 	docker-compose down -v
 
+clean_images:
+	docker image rm `docker images *noiopen_wiki -q`
+
 backup_wiki_db:
-	@mkdir -p $(NOIOPEN_BACKUP_FOLDER)
 	docker exec $(NOIOPEN_WIKI_DB_CONTAINER_NAME) sh -c 'exec mysqldump --databases $$MYSQL_DATABASE -u$$MYSQL_USER -p"$$MYSQL_PASSWORD"' > $(NOIOPEN_BACKUP_FOLDER)/$(NOIOPEN_WIKI_DB_BACKUP_FILE)
 
 restore_wiki_db:
 	docker exec -i $(NOIOPEN_WIKI_DB_CONTAINER_NAME) sh -c 'exec mysql -u$$MYSQL_USER -p"$$MYSQL_PASSWORD"' < $(NOIOPEN_BACKUP_FOLDER)/$(NOIOPEN_WIKI_DB_BACKUP_FILE)
 
 backup_sso_db:
-	@mkdir -p $(NOIOPEN_BACKUP_FOLDER)
 	docker exec $(NOIOPEN_SSO_DB_CONTAINER_NAME) sh -c 'exec mysqldump --databases $$MYSQL_DATABASE -u$$MYSQL_USER -p"$$MYSQL_PASSWORD"' > $(NOIOPEN_BACKUP_FOLDER)/$(NOIOPEN_SSO_DB_BACKUP_FILE)
 
 restore_sso_db:
 	docker exec -i $(NOIOPEN_SSO_DB_CONTAINER_NAME) sh -c 'exec mysql -u$$MYSQL_USER -p"$$MYSQL_PASSWORD"' < $(NOIOPEN_BACKUP_FOLDER)/$(NOIOPEN_SSO_DB_BACKUP_FILE)
 
 export_sso_realm:
-	@mkdir -p $(NOIOPEN_BACKUP_FOLDER)
-	docker exec -it $(NOIOPEN_SSO_CONTAINER_NAME) opt/jboss/keycloak/bin/standalone.sh -Djboss.socket.binding.port-offset=100 -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.realmName=NoiOpen -Dkeycloak.migration.usersExportStrategy=REALM_FILE -Dkeycloak.migration.file=$(NOIOPEN_BACKUP_FOLDER)/$(NOIOPEN_SSO_BACKUP_FILE)
+	docker exec -it $(NOIOPEN_SSO_CONTAINER_NAME) opt/jboss/keycloak/bin/standalone.sh -Djboss.socket.binding.port-offset=100 -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.realmName=NoiOpen -Dkeycloak.migration.usersExportStrategy=REALM_FILE -Dkeycloak.migration.file=/backup/$(NOIOPEN_SSO_BACKUP_FILE)
 
 import_sso_realm:
-	docker exec -it $(NOIOPEN_SSO_CONTAINER_NAME) opt/jboss/keycloak/bin/standalone.sh -Djboss.socket.binding.port-offset=100 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=$(NOIOPEN_BACKUP_FOLDER)/$(NOIOPEN_SSO_BACKUP_FILE) -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
+	docker exec -it $(NOIOPEN_SSO_CONTAINER_NAME) opt/jboss/keycloak/bin/standalone.sh -Djboss.socket.binding.port-offset=100 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/backup/$(NOIOPEN_SSO_BACKUP_FILE) -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
 
 backup_all: backup_wiki_db backup_sso_db export_sso_realm
 
 restore_all: restore_wiki_db restore_sso_db import_sso_realm
 
-.PHONY: build up down cleanall backup_wiki_db restore_wiki_db backup_sso_db restore_sso_db export_sso_realm import_sso_realm backup_all restore_all
+.PHONY: build up down cleanall clean_images backup_wiki_db restore_wiki_db backup_sso_db restore_sso_db export_sso_realm import_sso_realm backup_all restore_all
