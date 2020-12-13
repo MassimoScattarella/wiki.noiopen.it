@@ -3,26 +3,26 @@ version: '3'
 services:
   noiopen_wiki_db:
     image: mariadb:10.5.8
-    container_name: noiopen_wiki_db
+    container_name: ${NOIOPEN_WIKI_DB_HOST}
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${NOIOPEN_WIKI_DB_ROOT_PASSWORD}
-      MYSQL_USER: ${NOIOPEN_WIKI_USER_NAME}
-      MYSQL_PASSWORD: ${NOIOPEN_WIKI_USER_PASSWORD}
+      MYSQL_USER: ${NOIOPEN_WIKI_DB_USER_NAME}
+      MYSQL_PASSWORD: ${NOIOPEN_WIKI_DB_USER_PASSWORD}
       MYSQL_DATABASE: ${NOIOPEN_WIKI_DB_NAME}
       MYSQL_INITDB_SKIP_TZINFO: "true"
     volumes:
       - noiopen_wiki_db:/var/lib/mysql
-      - ./wiki_db/dump:/docker-entrypoint-initdb.d
+      - ./wiki_db:/docker-entrypoint-initdb.d
 
   noiopen_sso_db:
     image: mariadb:10.5.8
-    container_name: noiopen_sso_db
+    container_name: ${NOIOPEN_SSO_DB_HOST}
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${NOIOPEN_SSO_DB_ROOT_PASSWORD}
-      MYSQL_USER: ${NOIOPEN_SSO_USER_NAME}
-      MYSQL_PASSWORD: ${NOIOPEN_SSO_USER_PASSWORD}
+      MYSQL_USER: ${NOIOPEN_SSO_DB_USER_NAME}
+      MYSQL_PASSWORD: ${NOIOPEN_SSO_DB_USER_PASSWORD}
       MYSQL_DATABASE: ${NOIOPEN_SSO_DB_NAME}
       MYSQL_INITDB_SKIP_TZINFO: "true"
     volumes:
@@ -31,34 +31,33 @@ services:
   noiopen_sso:
     image: quay.io/keycloak/keycloak:11.0.3
     restart: always
-    container_name: noiopen_sso
+    container_name: ${NOIOPEN_SSO_HOST}
     depends_on:
       - noiopen_sso_db
     ports:
-      - 8080:8080
+      - ${NOIOPEN_SSO_PORT}:8080
     environment:
       DB_VENDOR: mariadb
       DB_ADDR: ${NOIOPEN_SSO_DB_HOST}
       DB_DATABASE: ${NOIOPEN_SSO_DB_NAME}
-      DB_USER: ${NOIOPEN_SSO_USER_NAME}
-      DB_PASSWORD: ${NOIOPEN_SSO_USER_PASSWORD}
-      KEYCLOAK_USER: ${NOIOPEN_SSO_USER_NAME}
-      KEYCLOAK_PASSWORD: ${NOIOPEN_SSO_USER_PASSWORD}
-      KEYCLOAK_IMPORT: /dump/NoiOpen-realm.json
+      DB_USER: ${NOIOPEN_SSO_DB_USER_NAME}
+      DB_PASSWORD: ${NOIOPEN_SSO_DB_USER_PASSWORD}
+      KEYCLOAK_USER: noiopen_sso
+      KEYCLOAK_PASSWORD: ${NOIOPEN_SSO_ADMIN_PASSWORD}
+      KEYCLOAK_IMPORT: /realms/NoiOpen-realm.json
     volumes:
-      - "./sso/dump:/dump"
+      - "./sso/realms:/realms"
 
   noiopen_wiki:
     build: ./wiki
-    container_name: noiopen_wiki
+    container_name: ${NOIOPEN_WIKI_HOST}
     restart: always
     depends_on:
       - noiopen_wiki_db
       - noiopen_sso
     ports:
-      - 8081:80
+      - ${NOIOPEN_WIKI_PORT}:80
     volumes:
-      - ./wiki/images:/var/www/html/images
       - ./wiki/LocalSettings.php:/var/www/html/LocalSettings.php
 
 volumes:

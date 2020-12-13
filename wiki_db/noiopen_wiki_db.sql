@@ -1,8 +1,4 @@
 -- MariaDB dump 10.18  Distrib 10.5.8-MariaDB, for debian-linux-gnu (x86_64)
---
--- Host: localhost    Database: noiopen_wiki
--- ------------------------------------------------------
--- Server version	10.5.8-MariaDB-1:10.5.8+maria~focal
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,14 +10,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Current Database: `noiopen_wiki`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `noiopen_wiki` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-
-USE `noiopen_wiki`;
 
 --
 -- Table structure for table `actor`
@@ -37,7 +25,7 @@ CREATE TABLE `actor` (
   PRIMARY KEY (`actor_id`),
   UNIQUE KEY `actor_name` (`actor_name`),
   UNIQUE KEY `actor_user` (`actor_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=binary;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=binary;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -780,7 +768,6 @@ CREATE TABLE `module_deps` (
 
 LOCK TABLES `module_deps` WRITE;
 /*!40000 ALTER TABLE `module_deps` DISABLE KEYS */;
-INSERT INTO `module_deps` VALUES ('skins.vector.styles.legacy','vector|it','[\"resources/src/mediawiki.less/mediawiki.mixins.animation.less\",\"resources/src/mediawiki.less/mediawiki.mixins.less\",\"resources/src/mediawiki.less/mediawiki.mixins.rotation.less\",\"resources/src/mediawiki.less/mediawiki.ui/variables.less\",\"resources/src/mediawiki.skinning/i18n-all-lists-margins.less\",\"resources/src/mediawiki.skinning/i18n-headings.less\",\"resources/src/mediawiki.skinning/i18n-ordered-lists.less\",\"resources/src/mediawiki.skinning/images/ajax-loader.gif\",\"resources/src/mediawiki.skinning/images/magnify-clip-ltr.png\",\"resources/src/mediawiki.skinning/images/magnify-clip-ltr.svg\",\"resources/src/mediawiki.skinning/images/magnify-clip-rtl.png\",\"resources/src/mediawiki.skinning/images/magnify-clip-rtl.svg\",\"resources/src/mediawiki.skinning/images/spinner.gif\",\"skins/Vector/resources/skins.vector.styles/Footer.less\",\"skins/Vector/resources/skins.vector.styles/Indicators.less\",\"skins/Vector/resources/skins.vector.styles/Menu.less\",\"skins/Vector/resources/skins.vector.styles/MenuDropdown.less\",\"skins/Vector/resources/skins.vector.styles/MenuPortal.less\",\"skins/Vector/resources/skins.vector.styles/MenuTabs.less\",\"skins/Vector/resources/skins.vector.styles/SearchBox.less\",\"skins/Vector/resources/skins.vector.styles/SidebarLogo.less\",\"skins/Vector/resources/skins.vector.styles/SiteNotice.less\",\"skins/Vector/resources/skins.vector.styles/TabWatchstarLink-ie8.less\",\"skins/Vector/resources/skins.vector.styles/TabWatchstarLink.less\",\"skins/Vector/resources/skins.vector.styles/common/normalize.less\",\"skins/Vector/resources/skins.vector.styles/common/print.less\",\"skins/Vector/resources/skins.vector.styles/common/typography.less\",\"skins/Vector/resources/skins.vector.styles/images/arrow-down.png\",\"skins/Vector/resources/skins.vector.styles/images/arrow-down.svg\",\"skins/Vector/resources/skins.vector.styles/images/bullet-icon.svg\",\"skins/Vector/resources/skins.vector.styles/images/external-link-ltr-icon.png\",\"skins/Vector/resources/skins.vector.styles/images/external-link-ltr-icon.svg\",\"skins/Vector/resources/skins.vector.styles/images/portal-separator.png\",\"skins/Vector/resources/skins.vector.styles/images/search.png\",\"skins/Vector/resources/skins.vector.styles/images/search.svg\",\"skins/Vector/resources/skins.vector.styles/images/tab-current-fade.png\",\"skins/Vector/resources/skins.vector.styles/images/tab-normal-fade.png\",\"skins/Vector/resources/skins.vector.styles/images/tab-separator.png\",\"skins/Vector/resources/skins.vector.styles/images/unwatch-icon-hl.svg\",\"skins/Vector/resources/skins.vector.styles/images/unwatch-icon.svg\",\"skins/Vector/resources/skins.vector.styles/images/unwatch-temp-icon-hl.svg\",\"skins/Vector/resources/skins.vector.styles/images/unwatch-temp-icon.svg\",\"skins/Vector/resources/skins.vector.styles/images/user-avatar.png\",\"skins/Vector/resources/skins.vector.styles/images/user-avatar.svg\",\"skins/Vector/resources/skins.vector.styles/images/watch-icon-hl.svg\",\"skins/Vector/resources/skins.vector.styles/images/watch-icon.svg\",\"skins/Vector/resources/skins.vector.styles/legacy/Sidebar.less\",\"skins/Vector/resources/skins.vector.styles/legacy/layout.less\",\"skins/Vector/variables.less\"]');
 /*!40000 ALTER TABLE `module_deps` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -799,15 +786,6 @@ CREATE TABLE `objectcache` (
   KEY `exptime` (`exptime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=binary;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `objectcache`
---
-
-LOCK TABLES `objectcache` WRITE;
-/*!40000 ALTER TABLE `objectcache` DISABLE KEYS */;
-/*!40000 ALTER TABLE `objectcache` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `oldimage`
@@ -846,6 +824,31 @@ CREATE TABLE `oldimage` (
 LOCK TABLES `oldimage` WRITE;
 /*!40000 ALTER TABLE `oldimage` DISABLE KEYS */;
 /*!40000 ALTER TABLE `oldimage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `openid_connect`
+--
+
+DROP TABLE IF EXISTS `openid_connect`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `openid_connect` (
+  `oidc_user` int(10) unsigned NOT NULL,
+  `oidc_subject` tinyblob NOT NULL,
+  `oidc_issuer` tinyblob NOT NULL,
+  PRIMARY KEY (`oidc_user`),
+  KEY `openid_connect_subject` (`oidc_subject`(50),`oidc_issuer`(50))
+) ENGINE=InnoDB DEFAULT CHARSET=binary;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `openid_connect`
+--
+
+LOCK TABLES `openid_connect` WRITE;
+/*!40000 ALTER TABLE `openid_connect` DISABLE KEYS */;
+/*!40000 ALTER TABLE `openid_connect` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1495,7 +1498,7 @@ CREATE TABLE `updatelog` (
 
 LOCK TABLES `updatelog` WRITE;
 /*!40000 ALTER TABLE `updatelog` DISABLE KEYS */;
-INSERT INTO `updatelog` VALUES ('filearchive-fa_major_mime-patch-fa_major_mime-chemical.sql',NULL),('image-img_major_mime-patch-img_major_mime-chemical.sql',NULL),('oldimage-oi_major_mime-patch-oi_major_mime-chemical.sql',NULL),('user_former_groups-ufg_group-patch-ufg_group-length-increase-255.sql',NULL),('user_groups-ug_group-patch-ug_group-length-increase-255.sql',NULL),('user_properties-up_property-patch-up_property.sql',NULL);
+INSERT INTO `updatelog` VALUES ('AddRFCandPMIDInterwiki',NULL),('DeduplicateArchiveRevId',NULL),('DeleteDefaultMessages',NULL),('FixDefaultJsonContentPages',NULL),('MigrateActors',NULL),('MigrateComments',NULL),('PopulateChangeTagDef',NULL),('PopulateContentTables',NULL),('RefreshExternallinksIndex v1+IDN',NULL),('actor-actor_name-patch-actor-actor_name-varbinary.sql',NULL),('cl_fields_update',NULL),('cleanup empty categories',NULL),('externallinks-el_index_60-patch-externallinks-el_index_60-drop-default.sql',NULL),('filearchive-fa_major_mime-patch-fa_major_mime-chemical.sql',NULL),('fix protocol-relative URLs in externallinks',NULL),('image-img_major_mime-patch-img_major_mime-chemical.sql',NULL),('image-img_media_type-patch-add-3d.sql',NULL),('job-patch-job-params-mediumblob.sql',NULL),('mime_minor_length',NULL),('oldimage-oi_major_mime-patch-oi_major_mime-chemical.sql',NULL),('page-page_restrictions-patch-page_restrictions-null.sql',NULL),('populate *_from_namespace',NULL),('populate category',NULL),('populate externallinks.el_index_60',NULL),('populate fa_sha1',NULL),('populate img_sha1',NULL),('populate ip_changes',NULL),('populate log_search',NULL),('populate pp_sortkey',NULL),('populate rev_len and ar_len',NULL),('populate rev_parent_id',NULL),('populate rev_sha1',NULL),('recentchanges-rc_ip-patch-rc_ip_modify.sql',NULL),('site_stats-patch-site_stats-modify.sql',NULL),('sites-site_global_key-patch-sites-site_global_key.sql',NULL),('user_former_groups-ufg_group-patch-ufg_group-length-increase-255.sql',NULL),('user_groups-ug_group-patch-ug_group-length-increase-255.sql',NULL),('user_properties-up_property-patch-up_property.sql',NULL);
 /*!40000 ALTER TABLE `updatelog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1742,4 +1745,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-11 15:57:50
+-- Dump completed on 2020-12-12 18:16:50

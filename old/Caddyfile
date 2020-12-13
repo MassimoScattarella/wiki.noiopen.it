@@ -1,5 +1,0 @@
-wiki.noiopen.it
-
-uri replace /index.php/ /wiki/
-
-reverse_proxy http://127.0.0.1:8080

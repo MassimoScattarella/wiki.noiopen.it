@@ -1,2 +1,3 @@
-old/backup/noiopen.sqlite
 .env
+wiki/LocalSettings.php
+backup

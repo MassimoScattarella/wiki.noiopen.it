@@ -1,1 +1,0 @@
-0 * * * * bash -c '/sbin/runuser -l noiopen -c /home/noiopen/wiki.noiopen.it/backup.sh >>/var/log/backup.log 2>&1'
