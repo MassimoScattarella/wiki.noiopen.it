@@ -1,0 +1,42 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: discourse        #change_me 
+      POSTGRES_PASSWORD: pwddiscourse #change_me 
+      POSTGRES_DB: discourse          #change_me 
+    ports:
+      - 5432:5432
+    networks: 
+      - discourse_net
+
+  redis:
+    image: redis
+    command: redis-server --requirepass pwddiscourse #change_me 
+    restart: always
+    ports:
+      - 6379:6379
+    networks: 
+      - discourse_net
+
+  discourse_rebuild:
+    build: ./discourse
+    image: discourse
+    command: ./launcher rebuild app --docker-args "--network discourse_net"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $PWD/discourse/containers:/var/discourse/containers
+    depends_on: 
+      - postgres
+      - redis
+    networks: 
+      - discourse_net
+
+networks: 
+  discourse_net:
+    name: discourse_net
+
